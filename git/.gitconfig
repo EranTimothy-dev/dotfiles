@@ -1,0 +1,11 @@
+[core]
+	#editor = "$Asus/AppData/Local/Programs/'Microsoft VS Code'/Code.exe" --wait
+	editor = vim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[user]
+	name = EranTimothy-dev
+	email = eranperera.dev@gmail.com
