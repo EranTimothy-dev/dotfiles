@@ -9,8 +9,9 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export kalisf='/mnt/f/Kali_shf'
-
+export Winroot='/mnt/c'
 export Asus="/mnt/c/Users/ASUS"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -76,7 +77,7 @@ ZSH_THEME="kali-like"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode sudo zsh-autosuggestions)
+plugins=(git vi-mode sudo zsh-autosuggestions zsh-history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -139,8 +140,8 @@ bindkey '^[[1;5D' backward-word                   # ctrl + <-
 bindkey '^[[D' backward-word                      # ctrl + <-
 bindkey '^[[5~' beginning-of-buffer-or-history    # page up
 bindkey '^[[6~' end-of-buffer-or-history          # page down
-bindkey "^[[A" up-history
-bindkey "^[[B" down-history
+#bindkey "^[[A" up-history
+#bindkey "^[[B" down-history
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
@@ -354,3 +355,47 @@ alias pbcopy="xclip -selection clipboard -o"
 
 # windows git executable
 alias wgit="$Winroot/'Program Files'/Git/mingw64/bin/git.exe"
+
+alias clsrc="clear && exec zsh"
+
+function show_system_info() {
+    # Colors
+    local RED='\e[38;5;202m'  # Apple red/orange
+    local BLUE='\e[38;5;21m'    # Navy Blue
+    local WHITE='\e[97m'      # Bright white
+    local INFO='\e[38;5;251m' # Info text color
+    local RESET='\e[0m'       # Reset color
+
+    # System information with proper error handling for macOS
+    local USER=$(whoami)
+    local HOSTNAME=$(hostname)
+    local OS=$(sw_vers -productName 2>/dev/null)" "$(sw_vers -productVersion 2>/dev/null || echo "Ubuntu")
+    local KERNEL=$(uname -r)
+    local UPTIME=$(uptime | sed 's/.*up \([^,]*\).*/\1/')
+    local PACKAGES=$(brew list --formula 2>/dev/null | wc -l | tr -d ' ' || echo "Unknown")
+    local SHELL=$(basename "$SHELL")
+    local MEMORY=$(free -h | awk '/Mem:/ {print $3 "used / " $2 " total"}' || echo "Unknown")
+
+    # Print Apple logo with system information
+    echo -e "
+${BLUE}⠀⠀⡶⠛⠲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡶⠚⢲⡀⠀
+${BLUE}⣰⠛⠃⠀⢠⣏⠀⠀⠀⠀⣀⣠⣤⣤⣤⣤⣤⣤⣤⣀⡀⠀⠀⠀⣸⡇⠀⠈⠙⣧  ${RED}User:${RESET}     ${INFO}${USER}${RESET}
+${BLUE}⠸⣦⣤⣄⠀⠙⢷⣤⣶⠟⠛⢉⣁⣠⣤⣤⣤⣀⣉⠙⠻⢷⣤⡾⠋⢀⣠⣤⣴⠟  ${RED}Hostname:${RESET} ${INFO}${HOSTNAME}${RESET}
+${BLUE} ⠀⠀⠈⠳⣤⡾⠋⣀⣴⣿⣿⠿⠿⠟⠛⠿⠿⣿⣿⣶⣄⠙⢿⣦⠟⠁⠀⠀⠀  ${RED}OS:${RESET}      ${INFO}${OS}${RESET}
+${BLUE} ⠀⠀⢀⣾⠟⢀⣼⣿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣷⡄⠹⣷⡀⠀⠀⠀  ${RED}Kernel:${RESET}   ${INFO}${KERNEL}${RESET}
+${BLUE} ⠀⠀⣾⡏⢠⣿⣿⡯⠤⠤⠤⠒⠒⠒⠒⠒⠒⠒⠤⠤⠽⣿⣿⡆⠹⣷⡀⠀⠀  ${RED}Uptime:${RESET}   ${INFO}${UPTIME}${RESET}
+${BLUE} ⠀⢸⣟⣠⡿⠿⠟⠒⣒⣒⣈⣉⣉⣉⣉⣉⣉⣉⣁⣒⣒⡛⠻⠿⢤⣹⣇⠀⠀  ${RED}Packages:${RESET} ${INFO}${PACKAGES}${RESET}
+${BLUE}⠀ ⣾⡭⢤⣤⣠⡞⠉⠉⢀⣀⣀⠀⠀⠀⠀⢀⣀⣀⠀⠈⢹⣦⣤⡤⠴⣿⠀⠀  ${RED}Shell:${RESET}    ${INFO}${SHELL}${RESET}
+${BLUE} ⠀⣿⡇⢸⣿⣿⣇⠀⣼⣿⣿⣿⣷⠀⠀⣼⣿⣿⣿⣷⠀⢸⣿⣿⡇⠀⣿⠀⠀  ${RED}Memory:${RESET}   ${INFO}${MEMORY}${RESET}
+${BLUE} ⠀⢻⡇⠸⣿⣿⣿⡄⢿⣿⣿⣿⡿⠀⠀⢿⣿⣿⣿⡿⢀⣿⣿⣿⡇⢸⣿⠀⠀
+${BLUE} ⠀⠸⣿⡀⢿⣿⣿⣿⣆⠉⠛⠋⠁⢴⣶⠀⠉⠛⠉⣠⣿⣿⣿⡿⠀⣾⠇⠀⠀
+${BLUE} ⠀⠀⢻⣷⡈⢻⣿⣿⣿⣿⣶⣤⣀⣈⣁⣀⡤⣴⣿⣿⣿⣿⡿⠁⣼⠟⠀⠀⠀
+${BLUE} ⠀⠀⢀⣽⣷⣄⠙⢿⣿⣿⡟⢲⠧⡦⠼⠤⢷⢺⣿⣿⡿⠋⣠⣾⢿⣄⠀⠀⠀
+${BLUE}⢰⠟⠛⠟⠁⣨⡿⢷⣤⣈⠙⢿⡙⠒⠓⠒⠓⠚⣹⠛⢉⣠⣾⠿⣧⡀⠙⠋⠙⣆
+${BLUE}⠹⣄⡀⠀⠐⡏⠀⠀⠉⠛⠿⣶⣿⣦⣤⣤⣤⣶⣷⡾⠟⠋⠀⠀⢸⡇⠀⢠⣤⠟
+ ${BLUE}⠀⠳⢤⠼⠃⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠘⠷⢤⠾⠁⠀${RESET}
+"
+}
+
+show_system_info
+
