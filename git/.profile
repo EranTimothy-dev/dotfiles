@@ -20,4 +20,10 @@ fi
 
 alias dc='conda deactivate'
 
-source ~/.bashrc
+if [[ "$0" == *"bash" ]]; then
+    [ -f ~/.bashrc ] && source ~/.bashrc
+elif [[ "$0" == *"zsh" ]]; then
+    [ -f ~/.zshrc ] && source ~/.zshrc
+fi
+
+# source ~/.bashrc
