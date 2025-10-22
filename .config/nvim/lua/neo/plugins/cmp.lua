@@ -5,11 +5,10 @@ return {
       "hrsh7th/cmp-nvim-lsp",      -- LSP source
       "hrsh7th/cmp-buffer",        -- Buffer words
       "hrsh7th/cmp-path",          -- Filesystem paths
-      "hrsh7th/cmp-cmdline",       -- Command line completions
       "L3MON4D3/LuaSnip",          -- Snippet engine
       "saadparwaiz1/cmp_luasnip",  -- Snippet completions
-      "rafamadriz/friendly-snippets", -- Useful preset snippets
       "onsails/lspkind.nvim",
+      -- "rafamadriz/friendly-snippets", -- Useful preset snippets
     },
     config = function()
       local cmp = require("cmp")

@@ -46,7 +46,7 @@ return {
       },
       view = {
         width = 35,
-        side = 'left',
+        side = 'right',
       },
       window = {
         mappings = {
@@ -74,15 +74,15 @@ return {
               end
             end,
 
-            -- Vertical split
-            ["v"] = function(state)
-              local node = state.tree:get_node()
-              if node.type == "file" then
-                vim.cmd("split " .. vim.fn.fnameescape(node.path))
-                -- Move the new split to the right
-                vim.cmd("wincmd J")
-              end
-            end,
+            -- -- Vertical split
+            -- ["v"] = function(state)
+            --   local node = state.tree:get_node()
+            --   if node.type == "file" then
+            --     vim.cmd("split " .. vim.fn.fnameescape(node.path))
+            --     -- Move the new split to the right
+            --     vim.cmd("wincmd J")
+            --   end
+            -- end,
         },
       },
     })

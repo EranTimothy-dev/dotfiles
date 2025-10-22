@@ -55,6 +55,7 @@ return {
         dependencies = {
             "nvim-java/nvim-java",
             "nvim-telescope/telescope.nvim",
+            "ibhagwan/fzf-lua",
         },
         opts = {},
         config = function()

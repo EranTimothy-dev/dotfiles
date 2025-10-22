@@ -2,6 +2,7 @@ return{
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
+    local lazy_status = require("lazy.status")
     -- Bubble theme from lualine examples
     local colors = {
       blue   = '#80a0ff',
@@ -43,8 +44,18 @@ return{
         lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { { 'filename', path = 1 } },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress' },
+        lualine_x = { 'fileformat', 'filetype' },
+        -- lualine_y = { 'progress' },
+        lualine_y = {
+                    {
+                        lazy_status.updates,
+                        cond = lazy_status.has_updates,
+                        color = { fg = "#ff9e64"}
+                    },
+                    { "encoding" },
+                    { "fileformat", symbols = { unix = "󰕈" } },
+                    { "filetype" },
+                },
         lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
       },
       inactive_sections = {

@@ -24,12 +24,12 @@ vim.keymap.set('n', 'wy', '"+yy', { noremap = true, silent = true, desc = "Copy 
 vim.keymap.set('v', 'wy', '"+y', { noremap = true, silent = true, desc = "Copy selection to Windows clipboard" })
 
 -- tab remappings in nvim
-vim.keymap.set("n", "<Tab>", "gt", { silent = true })
-vim.keymap.set("n", "<S-Tab>", "gT", { silent = true })
-vim.keymap.set("n", "T", ":tabclose<CR>", { silent = true })
+-- vim.keymap.set("n", "<Tab>", "gt", { silent = true })
+-- vim.keymap.set("n", "<S-Tab>", "gT", { silent = true })
+-- vim.keymap.set("n", "T", ":tabclose<CR>", { silent = true })
 
--- tab remappings in nvim
-vim.keymap.set("n", "S", "<nop>", { silent = true })
+-- split remappings in nvim
+-- vim.keymap.set("n", "S", "<C-w>v", { silent = true })
 vim.keymap.set("n", "SH", "<C-w>h", { silent = true })
 vim.keymap.set("n", "SL", "<C-w>l", { silent = true })
 vim.keymap.set("n", "SK", "<C-w>k", { silent = true })
